@@ -1,0 +1,107 @@
+<div class="container mx-auto py-8">
+  <h1 class="text-3xl font-bold text-purple-800 mb-8">Admin Dashboard</h1>
+  
+  <div class="grid md:grid-cols-3 gap-8 mb-12">
+    <div class="bg-white p-6 rounded-lg shadow-md">
+      <div class="flex items-center">
+        <div class="text-purple-600 text-3xl mr-4">
+          <i class="fas fa-users"></i>
+        </div>
+        <div>
+          <h3 class="text-xl font-semibold">Total Users</h3>
+          <p class="text-2xl font-bold"><%= userCount %></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-white p-6 rounded-lg shadow-md">
+      <div class="flex items-center">
+        <div class="text-blue-600 text-3xl mr-4">
+          <i class="fas fa-user-clock"></i>
+        </div>
+        <div>
+          <h3 class="text-xl font-semibold">Pending Approvals</h3>
+          <p class="text-2xl font-bold"><%= pendingUsers.length %></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-white p-6 rounded-lg shadow-md">
+      <div class="flex items-center">
+        <div class="text-yellow-600 text-3xl mr-4">
+          <i class="fas fa-music"></i>
+        </div>
+        <div>
+          <h3 class="text-xl font-semibold">Pending Tracks</h3>
+          <p class="text-2xl font-bold"><%= pendingTracks.length %></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid md:grid-cols-2 gap-8">
+    <div class="bg-white p-6 rounded-lg shadow-md">
+      <h2 class="text-2xl font-semibold text-purple-800 mb-4">User Approvals</h2>
+      <% if (pendingUsers.length > 0) { %>
+        <div class="space-y-4">
+          <% pendingUsers.forEach(user => { %>
+            <div class="border rounded-lg p-4">
+              <div class="flex justify-between items-center mb-2">
+                <span class="font-medium"><%= user.email %></span>
+                <span class="text-sm text-gray-500">
+                  <%= new Date(user.createdAt).toLocaleDateString() %>
+                </span>
+              </div>
+              <div class="flex space-x-2">
+                <form action="/admin/approve-user/<%= user.id %>" method="POST">
+                  <button type="submit" class="text-sm bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded">
+                    Approve
+                  </button>
+                </form>
+                <form action="/admin/reject-user/<%= user.id %>" method="POST">
+                  <button type="submit" class="text-sm bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded">
+                    Reject
+                  </button>
+                </form>
+              </div>
+            </div>
+          <% }) %>
+        </div>
+      <% } else { %>
+        <p class="text-gray-600">No pending approvals.</p>
+      <% } %>
+    </div>
+
+    <div class="bg-white p-6 rounded-lg shadow-md">
+      <h2 class="text-2xl font-semibold text-purple-800 mb-4">Track Management</h2>
+      <% if (pendingTracks.length > 0) { %>
+        <div class="space-y-4">
+          <% pendingTracks.forEach(track => { %>
+            <div class="border rounded-lg p-4">
+              <div class="flex justify-between items-center mb-2">
+                <span class="font-medium"><%= track.title %></span>
+                <span class="text-sm text-gray-500">
+                  <%= new Date(track.createdAt).toLocaleDateString() %>
+                </span>
+              </div>
+              <div class="flex space-x-2">
+                <form action="/admin/approve-track/<%= track.id %>" method="POST">
+                  <button type="submit" class="text-sm bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded">
+                    Approve
+                  </button>
+                </form>
+                <form action="/admin/reject-track/<%= track.id %>" method="POST">
+                  <button type="submit" class="text-sm bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded">
+                    Reject
+                  </button>
+                </form>
+              </div>
+            </div>
+          <% }) %>
+        </div>
+      <% } else { %>
+        <p class="text-gray-600">No pending tracks.</p>
+      <% } %>
+    </div>
+  </div>
+</div>
