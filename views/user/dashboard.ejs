@@ -1,0 +1,109 @@
+<div class="container mx-auto py-8">
+  <h1 class="text-3xl font-bold text-purple-800 mb-8">Your Dashboard</h1>
+  
+  <div class="grid md:grid-cols-3 gap-8 mb-12">
+    <div class="bg-white p-6 rounded-lg shadow-md">
+      <div class="flex items-center">
+        <div class="text-purple-600 text-3xl mr-4">
+          <i class="fas fa-music"></i>
+        </div>
+        <div>
+          <h3 class="text-xl font-semibold">Total Tracks</h3>
+          <p class="text-2xl font-bold"><%= tracks.length %></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-white p-6 rounded-lg shadow-md">
+      <div class="flex items-center">
+        <div class="text-green-600 text-3xl mr-4">
+          <i class="fas fa-check-circle"></i>
+        </div>
+        <div>
+          <h3 class="text-xl font-semibold">Approved</h3>
+          <p class="text-2xl font-bold">
+            <%= tracks.filter(t => t.status === 'approved').length %>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-white p-6 rounded-lg shadow-md">
+      <div class="flex items-center">
+        <div class="text-yellow-600 text-3xl mr-4">
+          <i class="fas fa-dollar-sign"></i>
+        </div>
+        <div>
+          <h3 class="text-xl font-semibold">Total Earnings</h3>
+          <p class="text-2xl font-bold">
+            $<%= tracks.reduce((sum, t) => sum + t.earnings, 0).toFixed(2) %>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bg-white p-6 rounded-lg shadow-md mb-8">
+    <h2 class="text-2xl font-semibold text-purple-800 mb-4">Upload New Track</h2>
+    <form action="/tracks" method="POST" enctype="multipart/form-data">
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2">
+          Track Title
+        </label>
+        <input
+          class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600"
+          type="text"
+          name="title"
+          required
+        >
+      </div>
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2">
+          Audio File (MP3/WAV)
+        </label>
+        <div class="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center">
+          <input type="file" name="trackFile" accept=".mp3,.wav" required>
+        </div>
+      </div>
+      <button
+        type="submit"
+        class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-lg"
+      >
+        Upload Track
+      </button>
+    </form>
+  </div>
+
+  <h2 class="text-2xl font-semibold text-purple-800 mb-4">Your Tracks</h2>
+  <div class="overflow-x-auto">
+    <table class="min-w-full bg-white rounded-lg overflow-hidden">
+      <thead class="bg-gray-100">
+        <tr>
+          <th class="py-3 px-4 text-left">Title</th>
+          <th class="py-3 px-4 text-left">Status</th>
+          <th class="py-3 px-4 text-left">Earnings</th>
+          <th class="py-3 px-4 text-left">Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% tracks.forEach(track => { %>
+          <tr class="border-t">
+            <td class="py-3 px-4"><%= track.title %></td>
+            <td class="py-3 px-4">
+              <span class="px-2 py-1 rounded-full text-sm 
+                <%= track.status === 'approved' ? 'bg-green-100 text-green-800' : 
+                   track.status === 'rejected' ? 'bg-red-100 text-red-800' : 
+                   'bg-yellow-100 text-yellow-800' %>">
+                <%= track.status %>
+              </span>
+            </td>
+            <td class="py-3 px-4">$<%= track.earnings.toFixed(2) %></td>
+            <td class="py-3 px-4">
+              <%= new Date(track.createdAt).toLocaleDateString() %>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+</div>
