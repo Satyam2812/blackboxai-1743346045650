@@ -1,0 +1,40 @@
+<div class="max-w-4xl mx-auto py-12">
+  <div class="text-center mb-12">
+    <h1 class="text-4xl font-bold text-purple-800 mb-4">Welcome to MusicDistro</h1>
+    <p class="text-xl text-gray-600">Distribute your music and track your earnings</p>
+  </div>
+
+  <div class="grid md:grid-cols-3 gap-8">
+    <div class="bg-white p-6 rounded-lg shadow-md">
+      <div class="text-purple-600 text-3xl mb-4">
+        <i class="fas fa-music"></i>
+      </div>
+      <h3 class="text-xl font-semibold mb-2">Upload Tracks</h3>
+      <p class="text-gray-600">Share your music with the world through our platform</p>
+    </div>
+
+    <div class="bg-white p-6 rounded-lg shadow-md">
+      <div class="text-purple-600 text-3xl mb-4">
+        <i class="fas fa-chart-line"></i>
+      </div>
+      <h3 class="text-xl font-semibold mb-2">Track Earnings</h3>
+      <p class="text-gray-600">Monitor your revenue and growth in real-time</p>
+    </div>
+
+    <div class="bg-white p-6 rounded-lg shadow-md">
+      <div class="text-purple-600 text-3xl mb-4">
+        <i class="fas fa-users"></i>
+      </div>
+      <h3 class="text-xl font-semibold mb-2">Global Reach</h3>
+      <p class="text-gray-600">Connect with listeners worldwide</p>
+    </div>
+  </div>
+
+  <% if (typeof user === 'undefined' || !user) { %>
+    <div class="text-center mt-12">
+      <a href="/signup" class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg text-lg font-medium inline-block">
+        Get Started Now
+      </a>
+    </div>
+  <% } %>
+</div>
